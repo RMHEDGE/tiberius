@@ -251,3 +251,27 @@ jobs:
     - name: Run normal tests
       shell: powershell
       run: cargo test ${{matrix.features}}
+  # For now we're not running the integration tests in macos,
+  # only running the unit tests
+
+  cargo-test-macos:
+    runs-on: macos-26
+
+    strategy:
+      fail-fast: false
+      matrix:
+        database:
+        - 2019
+        features:
+        - "--no-default-features --features=rustls,chrono,time,tds73,sql-browser-async-std,sql-browser-tokio,sql-browser-smol,integrated-auth-gssapi,rust_decimal,bigdecimal"
+        - "--no-default-features --features=vendored-openssl"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions-rs/toolchain@v1
+
+    - uses: docker-practice/actions-setup-docker@master
+
+    - name: Run tests
+      run: cargo test ${{matrix.features}}
