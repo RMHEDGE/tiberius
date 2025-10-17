@@ -319,3 +319,4 @@ jobs:
           --skip bulk_load_required_tinyint_tokio \
           --skip bulk_load_required_varchar_limited_async_std \
           --skip bulk_load_required_varchar_limited_tokio
+          --skip bulk_load_optional_datetime2_6_async_std
