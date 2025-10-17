@@ -16,7 +16,7 @@ repository = "https://github.com/prisma/tiberius"
 version = "0.12.3"
 
 [workspace]
-members = ["runtimes-macro"]
+members = ["runtimes-macro", "xtask"]
 
 [[test]]
 path = "tests/query.rs"
