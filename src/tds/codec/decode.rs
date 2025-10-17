@@ -54,7 +54,7 @@ impl Decoder for PacketCodec {
                     Ok(None)
                 } else {
                     Err(
-                        std::io::Error::new(std::io::ErrorKind::Other, "bytes remaining on stream")
+                        std::io::Error::other("bytes remaining on stream")
                             .into(),
                     )
                 }
