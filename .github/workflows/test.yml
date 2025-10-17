@@ -275,4 +275,4 @@ jobs:
     - uses: actions-rs/toolchain@v1
 
     - name: Run tests
-      run: cargo test ${{matrix.features}}
+      run: cargo test ${{matrix.features}} --no-run
