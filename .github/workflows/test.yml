@@ -39,7 +39,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        engine: [ 2017, 2019, 2022, "azure" ]
+        # engine: [ 2017, 2019, 2022, "azure" ]
+
+        # testing only uses 2019 to save on github costs
+        engine: [ 2019 ]
         features: [ "--features=all", "--no-default-features", "--no-default-features --features=chrono", "--no-default-features --features=rustls", "--no-default-features --features=time", "--no-default-features --features=vendored-openssl" ]
 
     steps:
