@@ -279,8 +279,7 @@ jobs:
 
     - name: Run tests (skip known failing ones)
       run: |
-        cargo test ${{ matrix.features }} -- \
-          --skip bulk_load_optional_bigint_async_std \
+        cargo test ${{ matrix.features }} --skip bulk_load_optional_bigint_async_std \
           --skip bulk_load_optional_bigint_tokio \
           --skip bulk_load_optional_empty_nvarchar_async_std \
           --skip bulk_load_optional_empty_nvarchar_tokio \
