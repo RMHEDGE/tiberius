@@ -254,8 +254,6 @@ jobs:
   #   - name: Run normal tests
   #     shell: powershell
   #     run: cargo test ${{matrix.features}}
-  # For now we're not running the integration tests in macos,
-  # only running the unit tests
 
   cargo-test-macos:
     runs-on: macos-26
@@ -270,12 +268,19 @@ jobs:
         - "--no-default-features --features=vendored-openssl"
 
     steps:
-    - uses: actions/checkout@v5
-
-    - uses: actions-rs/toolchain@v1
 
     # - name: Run tests
     #   run: cargo test ${{matrix.features}} --no-run
 
-    - name: Run tests (skip known failing ones)
-      run: cargo test ${{ matrix.features }}
+    - uses: actions/checkout@v5 # checkout versions have been updated. previous v1/2
+    - uses: dtolnay/rust-toolchain@stable # changed to stable
+      with:
+        components: rustfmt, clippy
+
+    # For now we're not running the integration tests in macos,
+    # only running the unit tests
+    - name: Run test
+      run: cargo test ${{ matrix.features }} --lib
+
+    - name: Run clippy
+      run: cargo clippy ${{ matrix.features }}
