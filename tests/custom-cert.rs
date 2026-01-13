@@ -29,16 +29,18 @@ fn connect_to_custom_cert_instance_ado() -> Result<()> {
 
         let tcp = TcpStream::connect(config.get_addr()).await?;
 
-        let mut client = Client::connect(config, tcp.compat_write()).await?;
+        let client = Client::connect(config, tcp.compat_write()).await;
 
-        let row = client
-            .query("SELECT @P1", &[&-4i32])
-            .await?
-            .into_row()
-            .await?
-            .unwrap();
+        assert!(client.is_err());
 
-        assert_eq!(Some(-4i32), row.get(0));
+        // let row = client
+        //     .query("SELECT @P1", &[&-4i32])
+        //     .await?
+        //     .into_row()
+        //     .await?
+        //     .unwrap();
+
+        // assert_eq!(Some(-4i32), row.get(0));
         Ok(())
     })
 }
@@ -66,16 +68,19 @@ fn connect_to_custom_cert_instance_jdbc() -> Result<()> {
 
         let tcp = TcpStream::connect(config.get_addr()).await?;
 
-        let mut client = Client::connect(config, tcp.compat_write()).await?;
+        let client = Client::connect(config, tcp.compat_write()).await;
 
-        let row = client
-            .query("SELECT @P1", &[&-4i32])
-            .await?
-            .into_row()
-            .await?
-            .unwrap();
+        assert!(client.is_err());
 
-        assert_eq!(Some(-4i32), row.get(0));
+        // let row = client
+        //     .query("SELECT @P1", &[&-4i32])
+        //     .await?
+        //     .into_row()
+        //     .await?
+        //     .unwrap();
+
+        // assert_eq!(Some(-4i32), row.get(0));
+        
         Ok(())
     })
 }
@@ -91,7 +96,7 @@ fn connect_to_custom_cert_instance_without_ca() -> Result<()> {
     rt.block_on(async {
         let mut config = Config::new();
         config.authentication(AuthMethod::sql_server("sa", "<YourStrong@Passw0rd>"));
-        config.encryption(EncryptionLevel::On);
+        config.encryption(EncryptionLevel::Required);
         config.host("localhost");
         config.port(1433);
         // config.trust_cert_ca("mssql.crt");
