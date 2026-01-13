@@ -80,7 +80,7 @@ fn connect_to_custom_cert_instance_jdbc() -> Result<()> {
         //     .unwrap();
 
         // assert_eq!(Some(-4i32), row.get(0));
-        
+
         Ok(())
     })
 }
