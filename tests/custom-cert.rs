@@ -7,6 +7,15 @@ use tokio_util::compat::TokioAsyncWriteCompatExt;
 #[allow(dead_code)]
 static LOGGER_SETUP: Once = Once::new();
 
+// Generate a rsa private key (this is your CA private key)
+// Create a self signed certificate using the CA for the purposes of 
+// Generate another rsa private key (this is your server private key)
+// Create a CSR based on the "server private key"
+// Complete the CSR using the "CA private key"
+// https://docs.openssl.org/master/man1/openssl-ca/#synopsis
+// openssl-ca - OpenSSL Documentation
+ 
+
 #[test]
 #[cfg(any(
     feature = "rustls",
@@ -25,7 +34,6 @@ fn connect_to_custom_cert_instance_ado() -> Result<()> {
             "server=tcp:localhost,1433;IntegratedSecurity=true;TrustServerCertificateCA=mssql.crt",
         )?;
         config.authentication(AuthMethod::sql_server("sa", "<YourStrong@Passw0rd>"));
-        // config.trust_cert_ca("mssql.crt");
 
         let tcp = TcpStream::connect(config.get_addr()).await?;
 
@@ -33,14 +41,6 @@ fn connect_to_custom_cert_instance_ado() -> Result<()> {
 
         assert!(client.is_err());
 
-        // let row = client
-        //     .query("SELECT @P1", &[&-4i32])
-        //     .await?
-        //     .into_row()
-        //     .await?
-        //     .unwrap();
-
-        // assert_eq!(Some(-4i32), row.get(0));
         Ok(())
     })
 }
